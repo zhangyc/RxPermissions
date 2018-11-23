@@ -92,17 +92,26 @@ public class RxPermissions {
                                     return Observable.empty();
                                 }
                                 // Return true if all permissions are granted.
+
                                 for (Permission p : permissions) {
+
                                     if (!p.granted) {
+                                        //权限集合有一个被拒绝，直接退出循环
                                         return Observable.just(false);
                                     }
                                 }
-                                return Observable.just(true);
+                                if (CameraCheckUtil.isHas()){
+                                    return Observable.just(true);
+                                }else {
+                                    return Observable.just(false);
+                                }
                             }
                         });
             }
         };
+
     }
+
 
     /**
      * Map emitted items from the source observable into {@link Permission} objects for each
